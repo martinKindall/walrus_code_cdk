@@ -12,13 +12,25 @@ export class WalrusCodeIacStack extends Stack {
 
         const launchTemplate = new ec2.LaunchTemplate(this, 'myLaunchTemplate', {
             userData: setupScript,
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO)
+            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),
+            machineImage: ec2.MachineImage.lookup({
+                name: 'ami-linux-2-docker'
+            })
         });
 
         const vpc = ec2.Vpc.fromLookup(this, 'vpc-34818c4e', {isDefault: true});
 
-        const alb = new elbv2.ApplicationLoadBalancer(this, 'myAlb', {vpc});
+        const targetGroup = new elbv2.ApplicationTargetGroup(this, 'myTargetGroup', {
+            targetType: elbv2.TargetType.INSTANCE,
+            port: 80,
+            vpc,
+        });
+
+        const alb = new elbv2.ApplicationLoadBalancer(this, 'myAlb', {
+            vpc,
+            internetFacing: true
+        });
         const listener = alb.addListener('listener', {port: 80});
-        // listener.addTargets('target', {port: 80});
+        listener.addTargetGroups('target', {targetGroups: [targetGroup]});
     }
 }
