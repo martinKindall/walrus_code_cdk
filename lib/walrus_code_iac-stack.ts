@@ -56,9 +56,9 @@ public.ecr.aws/f5n7q8r5/aws-spring-param-store
             machineImage: machineImage,
             role: iamRole,
             keyName: 'codigo-morsa',
-            minCapacity: 0,
+            minCapacity: 1,
             maxCapacity: 2,
-            desiredCapacity: 0,
+            desiredCapacity: 1,
             healthCheck: HealthCheck.elb({
                 grace: Duration.minutes(6)
             }),
