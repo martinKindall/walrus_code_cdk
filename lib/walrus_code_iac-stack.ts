@@ -1,4 +1,4 @@
-import {Stack, StackProps} from 'aws-cdk-lib';
+import {Duration, Stack, StackProps} from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as autoScaling from 'aws-cdk-lib/aws-autoscaling';
@@ -35,7 +35,7 @@ public.ecr.aws/f5n7q8r5/aws-spring-param-store
             port: 80,
             vpc,
             healthCheck: {
-                path: '/actuator/health',
+                path: '/actuator/health'
             }
         });
 
@@ -58,7 +58,11 @@ public.ecr.aws/f5n7q8r5/aws-spring-param-store
             keyName: 'codigo-morsa',
             minCapacity: 0,
             maxCapacity: 2,
-            desiredCapacity: 0
+            desiredCapacity: 0,
+            healthCheck: HealthCheck.elb({
+                grace: Duration.minutes(6)
+            }),
+            userData: setupScript
         });
 
         asg.attachToApplicationTargetGroup(targetGroup);
