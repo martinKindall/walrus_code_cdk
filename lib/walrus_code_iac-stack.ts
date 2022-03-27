@@ -4,7 +4,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as autoScaling from 'aws-cdk-lib/aws-autoscaling';
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import {Construct} from 'constructs';
-import {IVpc, Peer, Port, Vpc} from "aws-cdk-lib/aws-ec2";
+import {IVpc, Peer, Port} from "aws-cdk-lib/aws-ec2";
 import {HealthCheck} from "aws-cdk-lib/aws-autoscaling";
 import {IRole} from "aws-cdk-lib/aws-iam/lib/role";
 
