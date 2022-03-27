@@ -55,12 +55,12 @@ public.ecr.aws/f5n7q8r5/aws-spring-param-store
             }
         });
 
-        const alb = new elbv2.ApplicationLoadBalancer(this, 'myAlb', {
-            vpc: this.vpc,
-            internetFacing: true
-        });
-        const listener = alb.addListener('listener', {port: 80});
-        listener.addTargetGroups('target', {targetGroups: [this.targetGroup]});
+        // const alb = new elbv2.ApplicationLoadBalancer(this, 'myAlb', {
+        //     vpc: this.vpc,
+        //     internetFacing: true
+        // });
+        // const listener = alb.addListener('listener', {port: 80});
+        // listener.addTargetGroups('target', {targetGroups: [this.targetGroup]});
     }
 
     private createAsg() {
